@@ -34,7 +34,7 @@ public class LevelController : MonoBehaviour
             touchcount[i] = 0;
         }
 
-        controller = new OrientationController("COM4");
+        controller = new OrientationController("COM5");
     }
 
     // Update is called once per frame

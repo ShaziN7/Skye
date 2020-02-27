@@ -63,7 +63,7 @@ public class OrientationController
     {
         //comPort = Load("settings.txt");
    
-        serialPort = new SerialPort("COM4", 115200, Parity.None, 8, StopBits.One);
+        serialPort = new SerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
         OpenConnection();
 
         while (true)
