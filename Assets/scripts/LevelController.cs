@@ -7,19 +7,20 @@ using TMPro;
 
 public class LevelController : MonoBehaviour
 {
-    int numOfTouches = 22;
+    int numOfTouches = 10;
+    int[] touchcount;
     [SerializeField] Sprite[] sprites;
+    [SerializeField] GameObject image;
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] TextMeshProUGUI count;
-    [SerializeField] AudioSource AudioSource;
-    [SerializeField] GameObject image;
-    [SerializeField] AudioClip[] Audiofiles;
-    private int[] touchcount;
+   // [SerializeField] AudioSource AudioSource;
+   // [SerializeField] AudioClip[] Audiofiles;
+    
+    
+    private bool isPlaying = false;
+    private bool isCounted = false;
 
     OrientationController controller;
-    private bool isPlaying = false;
-
-
 
 
     //touchcount and audiofiles int he IENumerator functions are 1 behind due to starting at 0, sprites start at 1 due to heir being a default image in element 0
@@ -27,6 +28,9 @@ public class LevelController : MonoBehaviour
     AudioSource myAudioSource;
     void Start()
     {
+        
+        isPlaying = false;
+        isCounted = false;
         touchcount = new int[numOfTouches];
         text.text = " Please touch a body part";
         for (int i = 0; i < numOfTouches; i++)
@@ -40,376 +44,238 @@ public class LevelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        string keyPressed = controller.getKey();
 
-        Debug.Log(keyPressed);
+        //////////////////// teensy code below ////////////////////////
+        //string keyPressed = controller.getKey();
+
+        //Debug.Log(keyPressed);
 
         //Debug.Log(controller.firstPressed);
 
-        if (keyPressed != "EMPTY" && controller.firstPressed == true && isPlaying == false)
-        {
-            isPlaying = true;
+        //if (keyPressed != "EMPTY" && controller.firstPressed == true && isPlaying == false)
+        //{
+        //    isPlaying = true;
 
-            switch (keyPressed)
-            {
-                case "Q":
-                    StartCoroutine(ForeHead1());
-                    break;
+        //    switch (keyPressed)
+        //    {
+        //        case "Q":
+        //            StartCoroutine(ForeHead1());
+        //            break;
 
-                case "W":
-                    StartCoroutine(NeckFront2());
-                    break;
+        //        case "W":
+        //            StartCoroutine(NeckFront2());
+        //            break;
 
-                case "E":
-                    StartCoroutine(Neckside3());
-                    break;
+        //        case "E":
+        //            StartCoroutine(Neckside3());
+        //            break;
 
-                case "R":
-                    StartCoroutine(Shoulders4());
-                    break;
+        //        case "R":
+        //            StartCoroutine(Shoulders4());
+        //            break;
 
-                case "T":
-                    StartCoroutine(Biceps5());
-                    break;
+        //        case "T":
+        //            StartCoroutine(Biceps5());
+        //            break;
 
-                default:
-                    isPlaying = false;
-                    break;
+        //        default:
+        //            isPlaying = false;
+        //            break;
+        //    }
+
+
+        
+        if (Input.GetButtonDown("KeyboardQ") && isPlaying == false) { StartCoroutine(Cheek1()); }
+        
+        if (Input.GetButtonDown("KeyboardW") && isPlaying == false) { StartCoroutine(Head2()); }
+     
+        if (Input.GetButtonDown("KeyboardE") && isPlaying == false) { StartCoroutine(LBreast3()); }
+      
+        if (Input.GetButtonDown("KeyboardR") && isPlaying == false) { StartCoroutine(LVagina4()); }
+        
+        if (Input.GetButtonDown("KeyboardT") && isPlaying == false) { StartCoroutine(MVagina5()); }
+
+        if (Input.GetButtonDown("KeyboardY") && isPlaying == false) { StartCoroutine(Neck6()); }
+        
+        if (Input.GetButtonDown("KeyboardU") && isPlaying == false) { StartCoroutine(RBreast7()); }
+        
+        if (Input.GetButtonDown("KeyboardI") && isPlaying == false) { StartCoroutine(Ribs8()); }
+     
+        if (Input.GetButtonDown("KeyboardO") && isPlaying == false) { StartCoroutine(Tummy9()); }
+    
+        if (Input.GetButtonDown("KeyboardP") && isPlaying == false) { StartCoroutine(RVagina10()); }
             }
 
-       
-            ////Biceps
-            //if (Input.GetButtonDown("KeyboardT")) { StartCoroutine(Biceps5()); }
-            ////Lower Arms
-            //if (Input.GetButtonDown("KeyboardY")) { StartCoroutine(LowerArm6()); }
-            ////hands
-            //if (Input.GetButtonDown("KeyboardU")) { StartCoroutine(Hands7()); }
-            ////breasts
-            //if (Input.GetButtonDown("KeyboardI")) { StartCoroutine(Breasts8()); }
-            ////stomach
-            //if (Input.GetButtonDown("KeyboardO")) { StartCoroutine(Stomach9()); }
-            ////hips
-            //if (Input.GetButtonDown("KeyboardP")) { StartCoroutine(Hips10()); }
-            ////vagina
-            //if (Input.GetButtonDown("KeyboardA")) { StartCoroutine(Vagina11()); }
-            ////Quads
-            //if (Input.GetButtonDown("KeyboardS")) { StartCoroutine(Quads12()); }
-            ////knees
-            //if (Input.GetButtonDown("KeyboardD")) { StartCoroutine(Knees13()); }
-            ////shins
-            //if (Input.GetButtonDown("KeyboardF")) { StartCoroutine(Shins14()); }
-            ////backhead
-            //// if (keypressed = "KeyboardG") { StartCoroutine(BackHead15()); }
-            ////nape
-            //if (Input.GetButtonDown("KeyboardH")) { StartCoroutine(Nape16()); }
-            ////shoulderback
-            //if (Input.GetButtonDown("KeyboardJ")) { StartCoroutine(ShoulderBack17()); }
-            ////triceps
-            //if (Input.GetButtonDown("KeyboardK")) { StartCoroutine(tripceps18()); }
-            ////lowerarmback
-            //if (Input.GetButtonDown("KeyboardL")) { StartCoroutine(LowerArmback19()); }
-            ////lowerback
-            //if (Input.GetButtonDown("KeyboardZ")) { StartCoroutine(LowerBack20()); }
-            ////bottom
-            //if (Input.GetButtonDown("KeyboardX")) { StartCoroutine(Bottom21()); }
-            ////hamstring
-            //if (Input.GetButtonDown("KeyboardC")) { StartCoroutine(Hamstring22()); }
-            ////calves
-            //if (Input.GetButtonDown("KeyboardV")) { StartCoroutine(Calves23()); }
-        }
-    }
 
     public void DefaultText()
     {
+        isPlaying = false;
+        isCounted = false;
         text.text = " Please touch a part on skyes body";
         count.text = "";
         image.GetComponent<SpriteRenderer>().sprite = sprites[0];
 
     }
-
-
-    IEnumerator ForeHead1()
+    IEnumerator Cheek1()
     {
+       isPlaying = true;
        image.GetComponent<SpriteRenderer>().sprite = sprites[1];
-       text.text = " You touched her forehead";
+       
+       text.text = "You touched Skye's cheek, I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
 
-        if (controller.firstPressed == true)
+        if (!isCounted)
         {
             touchcount[0]++;
+            isCounted = true;
         }
- 
-        count.text = " Her forehead has been touched:" + touchcount[0] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[0], Camera.main.transform.position, 1.0f);
+
+        count.text = " Skye's cheek has been touched:" + touchcount[0] + " times.";
+        //AudioSource.PlayClipAtPoint(Audiofiles[0], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
-
-        isPlaying = false;
     }
-
-    IEnumerator NeckFront2()
+    IEnumerator Head2()
     {
+        isPlaying = true;
         image.GetComponent<SpriteRenderer>().sprite = sprites[2];
-        text.text = " You touched her throat";
-        touchcount[1]++;
-        count.text = " Her throat has been touched:" + touchcount[1] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[1], Camera.main.transform.position, 1.0f);
+        text.text = " You touched Skye's Head/hair,  I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background ";
+
+        if (!isCounted)
+        {
+            touchcount[1]++;
+            isCounted = true;
+        }
+
+        count.text = " Skye's head has been touched:" + touchcount[1] + " times.";
+        // AudioSource.PlayClipAtPoint(Audiofiles[1], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
 
-        isPlaying = false;
     }
-    IEnumerator Neckside3()
+    IEnumerator LBreast3()
     {
+        isPlaying = true;
         image.GetComponent<SpriteRenderer>().sprite = sprites[3];
-        text.text = " You touched her neck";
-        touchcount[2]++;
-        count.text = " Her neck has been touched:" + touchcount[2] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[2], Camera.main.transform.position, 1.0f);
+        text.text = " You touched her Left breast,  I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
+        if (!isCounted)
+        {
+            touchcount[2]++;
+            isCounted = true;
+        }
+        count.text = " Skye's left breast has been touched:" + touchcount[2] + " times.";
+        // AudioSource.PlayClipAtPoint(Audiofiles[2], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
-
-        isPlaying = false;
     }
-    IEnumerator Shoulders4()
+
+    IEnumerator LVagina4()
     {
+        isPlaying = true;
         image.GetComponent<SpriteRenderer>().sprite = sprites[4];
-        text.text = " You touched her shoulder";
-        touchcount[3]++;
-        count.text = " Her shoulders have been touched:" + touchcount[3] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[3], Camera.main.transform.position, 1.0f);
+        text.text = " You touched the left side of skye's Vagina,  I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
+        if (!isCounted)
+        {
+            touchcount[3]++;
+            isCounted = true;
+        }
+        count.text = " The left side of Skye's vagina has been touched:" + touchcount[3] + " times.";
+        // AudioSource.PlayClipAtPoint(Audiofiles[3], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
-
-        isPlaying = false;
     }
-    IEnumerator Biceps5()
+
+    IEnumerator MVagina5()
     {
+        isPlaying = true;
         image.GetComponent<SpriteRenderer>().sprite = sprites[5];
-        text.text = " You touched her bicep";
-        touchcount[4]++;
-        count.text = " Her biceps has been touched:" + touchcount[4] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[4], Camera.main.transform.position, 1.0f);
+        text.text = " You touched the middle of Skye's vagina,  I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
+        if (!isCounted)
+        {
+            touchcount[4]++;
+            isCounted = true;
+        }
+        count.text = " The middle of Skye's vagina has been touched:" + touchcount[4] + " times.";
+        //AudioSource.PlayClipAtPoint(Audiofiles[4], Camera.main.transform.position, 1.0f);
+        yield return new WaitForSeconds(5);
+        DefaultText();
+    }
+    IEnumerator Neck6()
+    {
+        isPlaying = true;
+        image.GetComponent<SpriteRenderer>().sprite = sprites[1];
+        text.text = " You touched Skye's neck,  I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
+        if (!isCounted)
+        {
+            touchcount[5]++;
+            isCounted = true;
+        }
+        count.text = " Skye's Neck has been touched:" + touchcount[5] + " times.";
+        //  AudioSource.PlayClipAtPoint(Audiofiles[5], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
 
-        isPlaying = false;
     }
-    IEnumerator LowerArm6()
+    IEnumerator RBreast7()
     {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[6];
-        text.text = " You touched her arm";
-        touchcount[5]++;
-        count.text = " Her arms have been touched:" + touchcount[5] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[5], Camera.main.transform.position, 1.0f);
+        isPlaying = true;
+        image.GetComponent<SpriteRenderer>().sprite = sprites[2];
+        text.text = " You touched Skye's right breast,  I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
+        if (!isCounted)
+        {
+            touchcount[6]++;
+            isCounted = true;
+        }
+        count.text = " Skye's right breast has been touched:" + touchcount[6] + " times.";
+        //AudioSource.PlayClipAtPoint(Audiofiles[6], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
-
-        isPlaying = false;
     }
-    IEnumerator Hands7()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[7];
-        text.text = " You touched her hand";
-        touchcount[6]++;
-        count.text = " Her hands have been touched:" + touchcount[6] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[6], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
 
-        isPlaying = false;
-    }
-    IEnumerator Breasts8()
+    IEnumerator Ribs8()
     {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[8];
-        text.text = " You touched her Breasts";
-        touchcount[7]++;
-        count.text = " Her breasts have been touched:" + touchcount[7] + " times.";
+        isPlaying = true;
+        image.GetComponent<SpriteRenderer>().sprite = sprites[3];
+        text.text = " You touched Skye's Ribs,  I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
+        if (!isCounted)
+        {
+            touchcount[7]++;
+            isCounted = true;
+        }
+        count.text = " Skye's breasts have been touched:" + touchcount[7] + " times.";
         AudioSource.PlayClipAtPoint(Audiofiles[7], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
-
-        isPlaying = false;
     }
-    IEnumerator Stomach9()
+    IEnumerator Tummy9()
     {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[9];
+        image.GetComponent<SpriteRenderer>().sprite = sprites[4];
         text.text = " You touched her stomach";
-        touchcount[8]++;
+        if (!isCounted)
+        {
+            touchcount[8]++;
+            isCounted = true;
+        }
         count.text = " Her stomach has been touched:" + touchcount[8] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[8], Camera.main.transform.position, 1.0f);
+        // AudioSource.PlayClipAtPoint(Audiofiles[8], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
-
-        isPlaying = false;
     }
-    IEnumerator Hips10()
+    IEnumerator RVagina10()
     {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[10];
-        text.text = " You touched her hips";
-        touchcount[9]++;
+        image.GetComponent<SpriteRenderer>().sprite = sprites[5];
+        text.text = " You touched her Vagina, I dont really know what to write here, but i need it long enough that it looks like a paragraph of important text, probably some story background";
+        if (!isCounted)
+        {
+            touchcount[9]++;
+            isCounted = true;
+        }
         count.text = " Her hips have been touched:" + touchcount[9] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[9], Camera.main.transform.position, 1.0f);
+        //  AudioSource.PlayClipAtPoint(Audiofiles[9], Camera.main.transform.position, 1.0f);
         yield return new WaitForSeconds(5);
         DefaultText();
-
-        isPlaying = false;
     }
-    IEnumerator Vagina11()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[11];
-        text.text = " You touched her Vagina";
-        touchcount[10]++;
-        count.text = " Her vagina has been touched:" + touchcount[10] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[10], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
+   
 
-        isPlaying = false;
-    }
-    IEnumerator Quads12()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[12];
-        text.text = " You touched her quads";
-        touchcount[11]++;
-        count.text = " Her quads have been touched:" + touchcount[11] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[11], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator Knees13()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[13];
-        text.text = " You touched her knees";
-        touchcount[12]++;
-        count.text = " Her knees have been touched:" + touchcount[12] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[12], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator Shins14()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[14];
-        text.text = " You touched her shins";
-        touchcount[13]++;
-        count.text = " Her shins have been touched:" + touchcount[13] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[13], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator BackHead15()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[15];
-        text.text = " You touched the back of her head";
-        touchcount[14]++;
-        count.text = " Her head has been touched:" + touchcount[14] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[14], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator Nape16()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[16];
-        text.text = " You touched the nape of her neck";
-        touchcount[15]++;
-        count.text = " Her nape has been touched:" + touchcount[15] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[15], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator ShoulderBack17()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[17];
-        text.text = " You touched the her trapezius";
-        touchcount[16]++;
-        count.text = " Her trapezius has been touched:" + touchcount[16] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[16], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator tripceps18()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[18];
-        text.text = " You touched the her triceps";
-        touchcount[17]++;
-        count.text = " Her triceps have been touched:" + touchcount[17] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[17], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator LowerArmback19()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[19];
-        text.text = " You touched the back of her arm";
-        touchcount[18]++;
-        count.text = " Her arms have been touched:" + touchcount[18] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[18], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator LowerBack20()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[20];
-        text.text = " You touched her lower back";
-        touchcount[19]++;
-        count.text = " Her lower back has been touched:" + touchcount[19] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[19], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator Bottom21()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[21];
-        text.text = " You touched her bottom";
-        touchcount[20]++;
-        count.text = " Her bottom has been touched:" + touchcount[20] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[20], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator Hamstring22()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[22];
-        text.text = " You touched her hamstrings";
-        touchcount[21]++;
-        count.text = " Her hamstrings have been touched:" + touchcount[21] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[21], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
-    IEnumerator Calves23()
-    {
-        image.GetComponent<SpriteRenderer>().sprite = sprites[23];
-        text.text = " You touched her calves";
-        touchcount[22]++;
-        count.text = " Her calves have been touched:" + touchcount[22] + " times.";
-        AudioSource.PlayClipAtPoint(Audiofiles[22], Camera.main.transform.position, 1.0f);
-        yield return new WaitForSeconds(5);
-        DefaultText();
-
-        isPlaying = false;
-    }
 
 
 }
